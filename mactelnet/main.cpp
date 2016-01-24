@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <arpa/inet.h>
 #include <boost/asio.hpp>
 
 
@@ -35,7 +36,7 @@ namespace mactelnet {
             struct header {
                 uint8_t version;
                 uint8_t ttl;
-                uint8_t checksum;
+                uint16_t seq_no;
             };
             
             
@@ -80,19 +81,30 @@ udp::socket CreateSocket(boost::asio::io_service &io_service) {
 }
 
 
+template<typename T>
+T fromNetwork(const char* buffer);
+
+
+template<>
+uint16_t fromNetwork(const char* buffer) {
+    auto v = *reinterpret_cast<const uint16_t*>(buffer);
+    return ntohs(v);
+}
+
+
 void ParseMNDP(const char* buffer, size_t len) {
         if (len<18)
             return;
     
-    size_t offset { 0 };
     auto header = reinterpret_cast<const mactelnet::mndp::wire::header*>(buffer);
+    size_t offset { sizeof(*header) };
     
     mactelnet::mndp::Server server;
     
     while (offset + 4 < len) {
-        auto attr_type = *reinterpret_cast<const mactelnet::mndp::wire::AttributeType*>(buffer+offset);
+        auto attr_type = static_cast<mactelnet::mndp::wire::AttributeType>(fromNetwork<uint16_t>(buffer+offset));
         offset += 2;
-        auto attr_length = *reinterpret_cast<const uint32_t*>(buffer+offset);
+        auto attr_length = fromNetwork<uint16_t>(buffer+offset);
         offset += 2;
         if (offset + attr_length > len)
             // Invalid attribute length, would overflow.
@@ -150,8 +162,10 @@ int main(int argc, const char * argv[]) {
     char buf[1500];
     udp::endpoint sender_endpoint;
     
-    auto len = socket.receive_from(boost::asio::buffer(buf), sender_endpoint);
-    std::cout << "Received " << len << " bytes" << std::endl;
-    ParseMNDP(buf, len);
+    while (true) {
+        auto len = socket.receive_from(boost::asio::buffer(buf), sender_endpoint);
+        std::cout << "Received " << len << " bytes" << std::endl;
+        ParseMNDP(buf, len);
+    }
     return 0;
 }
