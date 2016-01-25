@@ -10,7 +10,7 @@
 		3A08241A1C542EEF00802E17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0824191C542EEF00802E17 /* main.cpp */; };
 		3A0824211C5433A000802E17 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0824201C5433A000802E17 /* libboost_system-mt.dylib */; };
 		3AB234941C561616009DFC8D /* libboost_log-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234931C561616009DFC8D /* libboost_log-mt.dylib */; };
-		3AB234961C561655009DFC8D /* libboost_log_setup-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234951C561655009DFC8D /* libboost_log_setup-mt.dylib */; };
+		3AB234981C562535009DFC8D /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,7 +30,7 @@
 		3A0824191C542EEF00802E17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A0824201C5433A000802E17 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3AB234931C561616009DFC8D /* libboost_log-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_log-mt.dylib"; path = "../../../../opt/local/lib/libboost_log-mt.dylib"; sourceTree = "<group>"; };
-		3AB234951C561655009DFC8D /* libboost_log_setup-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_log_setup-mt.dylib"; path = "../../../../opt/local/lib/libboost_log_setup-mt.dylib"; sourceTree = "<group>"; };
+		3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "../../../../opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AB234961C561655009DFC8D /* libboost_log_setup-mt.dylib in Frameworks */,
+				3AB234981C562535009DFC8D /* libboost_program_options-mt.dylib in Frameworks */,
 				3AB234941C561616009DFC8D /* libboost_log-mt.dylib in Frameworks */,
 				3A0824211C5433A000802E17 /* libboost_system-mt.dylib in Frameworks */,
 			);
@@ -50,7 +50,7 @@
 		3A08240D1C542EEF00802E17 = {
 			isa = PBXGroup;
 			children = (
-				3AB234951C561655009DFC8D /* libboost_log_setup-mt.dylib */,
+				3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */,
 				3AB234931C561616009DFC8D /* libboost_log-mt.dylib */,
 				3A0824201C5433A000802E17 /* libboost_system-mt.dylib */,
 				3A0824181C542EEF00802E17 /* mndp */,

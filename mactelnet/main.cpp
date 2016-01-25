@@ -14,9 +14,11 @@
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
+#include <boost/program_options.hpp>
 
 
 namespace logging = boost::log;
+namespace po = boost::program_options;
 using boost::asio::ip::udp;
 
 const unsigned short mndp_port = 5678;
@@ -190,6 +192,24 @@ void SendDiscoveryRequest(udp::socket &socket) {
 
 
 int main(int argc, const char * argv[]) {
+    int timeout { 10 };
+    bool passive { false };
+    
+    po::options_description options("Command line options");
+    options.add_options()
+        ("help,h", "Show help message")
+        ("timeout,t", po::value<int>(&timeout), "Timeout to wait for replies")
+        ("passive,p", po::value<bool>(), "Do not send MNDP discovery request")
+        ;
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, options), vm);
+    po::notify(vm);
+    
+    if (vm.count("help")) {
+        std::cout << options << std::endl;
+        return 0;
+    }
+              
     logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::info);
     
     boost::asio::io_service io_service;
@@ -198,12 +218,14 @@ int main(int argc, const char * argv[]) {
     char buf[1500];
     udp::endpoint sender_endpoint;
     
-    boost::asio::steady_timer timer(io_service,
-                                    std::chrono::steady_clock::now() + std::chrono::seconds(1));
-    timer.async_wait(
-                     [&](const boost::system::error_code &) {
-                         socket.cancel();
-                     });
+    if (timeout>=0) {
+        boost::asio::steady_timer timer(io_service,
+                                        std::chrono::steady_clock::now() + std::chrono::seconds(timeout));
+        timer.async_wait(
+                         [&](const boost::system::error_code &) {
+                             socket.cancel();
+                         });
+    }
     
     std::function<void(const boost::system::error_code &, std::size_t)> rcv_handler;
     rcv_handler = [&](const boost::system::error_code &, std::size_t len) {
@@ -213,7 +235,8 @@ int main(int argc, const char * argv[]) {
 
     socket.async_receive_from(boost::asio::buffer(buf), sender_endpoint, rcv_handler);
     
-    SendDiscoveryRequest(socket);
+    if (!passive)
+        SendDiscoveryRequest(socket);
 
     io_service.run();
     return 0;
