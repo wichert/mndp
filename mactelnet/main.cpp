@@ -153,9 +153,11 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
                 server.hardware = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::ipv6_address:
-                if (attr_length==16)
-                    server.ipv6 = boost::asio::ip::address_v6::from_string(buffer+offset);
-                else {
+                if (attr_length==16) {
+                    boost::asio::ip::address_v6::bytes_type bytes;
+                    std::copy(buffer+offset, buffer+offset+16, bytes.begin());
+                    server.ipv6 = boost::asio::ip::address_v6(bytes);
+                } else {
                     BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for IPv6 address";
                 }
                 break;
@@ -172,7 +174,10 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
     cout
         << "Platform: " << server.platform << endl
         << "Identity: " << server.identity << endl
-        << "Software id: " << server.software_id << endl;
+        << "Software id: " << server.software_id << endl
+        << "IPv4: " << server.ipv4 << endl
+        << "IPv6: " << server.ipv6 << endl;
+        ;
 }
 
 
