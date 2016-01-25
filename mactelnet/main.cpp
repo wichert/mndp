@@ -184,6 +184,7 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
 
 
 void SendDiscoveryRequest(udp::socket &socket) {
+    BOOST_LOG_TRIVIAL(info) << "Sending discovery request";
     udp::endpoint remote_endpoint(boost::asio::ip::address_v4::broadcast(), mndp_port);
     uint32_t r[1] { 0 };
     socket.send_to(boost::asio::buffer(r), remote_endpoint);
@@ -219,6 +220,7 @@ int main(int argc, const char * argv[]) {
     udp::endpoint sender_endpoint;
     
     if (timeout>=0) {
+        BOOST_LOG_TRIVIAL(debug) << "Will stop after " << timeout << " seconds";
         boost::asio::steady_timer timer(io_service,
                                         std::chrono::steady_clock::now() + std::chrono::seconds(timeout));
         timer.async_wait(
