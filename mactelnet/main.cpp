@@ -28,6 +28,7 @@ namespace mactelnet {
             std::string interface_name;
             uint8_t mac[6];
             std::chrono::seconds uptime;
+            boost::asio::ip::address_v4 ipv4;
             boost::asio::ip::address_v6 ipv6;
             
         };
@@ -92,7 +93,7 @@ uint16_t fromNetwork(const char* buffer) {
 }
 
 
-void ParseMNDP(const char* buffer, size_t len) {
+void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_address) {
         if (len<18)
             return;
     
@@ -100,6 +101,11 @@ void ParseMNDP(const char* buffer, size_t len) {
     size_t offset { sizeof(*header) };
     
     mactelnet::mndp::Server server;
+    
+    if (sender_address.is_v4())
+        server.ipv4 = sender_address.to_v4();
+    else if (sender_address.is_v6())
+        server.ipv6 = sender_address.to_v6();
     
     while (offset + 4 < len) {
         auto attr_type = static_cast<mactelnet::mndp::wire::AttributeType>(fromNetwork<uint16_t>(buffer+offset));
@@ -133,11 +139,14 @@ void ParseMNDP(const char* buffer, size_t len) {
             case mactelnet::mndp::wire::AttributeType::hardware:
                 server.hardware = std::string(buffer+offset, attr_length);
                 break;
-//            case mactelnet::mndp::wire::AttributeType::ipv6_address:
-//                if (attr_lenth==16)
-//                    server.ipv6 = boost::asio::ip::address_v6::address_v6(buffer+offset);
+            case mactelnet::mndp::wire::AttributeType::ipv6_address:
+                if (attr_length==16)
+                    server.ipv6 = boost::asio::ip::address_v6::from_string(buffer+offset);
+                break;
             case mactelnet::mndp::wire::AttributeType::interface_name:
                 server.interface_name = std::string(buffer+offset, attr_length);
+                break;
+            default:
                 break;
         }
         offset += attr_length;
@@ -164,8 +173,7 @@ int main(int argc, const char * argv[]) {
     
     while (true) {
         auto len = socket.receive_from(boost::asio::buffer(buf), sender_endpoint);
-        std::cout << "Received " << len << " bytes" << std::endl;
-        ParseMNDP(buf, len);
+        ParseMNDP(buf, len, sender_endpoint.address());
     }
     return 0;
 }
