@@ -10,8 +10,12 @@
 #include <chrono>
 #include <arpa/inet.h>
 #include <boost/asio.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
 
 
+namespace logging = boost::log;
 using boost::asio::ip::udp;
 
 const unsigned short mndp_port = 5678;
@@ -94,8 +98,10 @@ uint16_t fromNetwork(const char* buffer) {
 
 
 void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_address) {
-        if (len<18)
-            return;
+    if (len<18) {
+        BOOST_LOG_TRIVIAL(info) << "Ignoring short packet (" << len << " bytes)";
+        return;
+    }
     
     auto header = reinterpret_cast<const mactelnet::mndp::wire::header*>(buffer);
     size_t offset { sizeof(*header) };
@@ -119,6 +125,9 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
             case mactelnet::mndp::wire::AttributeType::mac_address:
                 if (attr_length==6)
                     memcpy(server.mac, buffer+offset, 6);
+                else {
+                    BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for MAC address";
+                }
                 break;
             case mactelnet::mndp::wire::AttributeType::identity:
                 server.identity = std::string(buffer+offset, attr_length);
@@ -132,7 +141,10 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
             case mactelnet::mndp::wire::AttributeType::uptime:
                 if (attr_length==4)
                     server.uptime = std::chrono::seconds(*reinterpret_cast<const uint32_t*>(buffer+offset));
-                    break;
+                else {
+                    BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for uptime";
+                }
+                break;
             case mactelnet::mndp::wire::AttributeType::software_id:
                 server.software_id = std::string(buffer+offset, attr_length);
                 break;
@@ -142,6 +154,9 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
             case mactelnet::mndp::wire::AttributeType::ipv6_address:
                 if (attr_length==16)
                     server.ipv6 = boost::asio::ip::address_v6::from_string(buffer+offset);
+                else {
+                    BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for IPv6 address";
+                }
                 break;
             case mactelnet::mndp::wire::AttributeType::interface_name:
                 server.interface_name = std::string(buffer+offset, attr_length);
@@ -161,6 +176,8 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
 
 
 int main(int argc, const char * argv[]) {
+    logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::info);
+    
     boost::asio::io_service io_service;
     udp::endpoint remote_endpoint(boost::asio::ip::address_v4::broadcast(), mndp_port);
     auto socket = CreateSocket(io_service);
