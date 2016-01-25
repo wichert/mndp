@@ -10,6 +10,7 @@
 #include <chrono>
 #include <arpa/inet.h>
 #include <boost/asio.hpp>
+#include <boost/asio/steady_timer.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
@@ -175,22 +176,40 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
 }
 
 
+void SendDiscoveryRequest(udp::socket &socket) {
+    udp::endpoint remote_endpoint(boost::asio::ip::address_v4::broadcast(), mndp_port);
+    uint32_t r[1] { 0 };
+    socket.send_to(boost::asio::buffer(r), remote_endpoint);
+    
+}
+
+
 int main(int argc, const char * argv[]) {
     logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::info);
     
     boost::asio::io_service io_service;
-    udp::endpoint remote_endpoint(boost::asio::ip::address_v4::broadcast(), mndp_port);
     auto socket = CreateSocket(io_service);
-    
-    uint32_t r[1] { 0 };
-    socket.send_to(boost::asio::buffer(r), remote_endpoint);
     
     char buf[1500];
     udp::endpoint sender_endpoint;
     
-    while (true) {
-        auto len = socket.receive_from(boost::asio::buffer(buf), sender_endpoint);
+    boost::asio::steady_timer timer(io_service,
+                                    std::chrono::steady_clock::now() + std::chrono::seconds(1));
+    timer.async_wait(
+                     [&](const boost::system::error_code &) {
+                         socket.cancel();
+                     });
+    
+    std::function<void(const boost::system::error_code &, std::size_t)> rcv_handler;
+    rcv_handler = [&](const boost::system::error_code &, std::size_t len) {
         ParseMNDP(buf, len, sender_endpoint.address());
-    }
+        socket.async_receive_from(boost::asio::buffer(buf), sender_endpoint, rcv_handler);
+    };
+
+    socket.async_receive_from(boost::asio::buffer(buf), sender_endpoint, rcv_handler);
+    
+    SendDiscoveryRequest(socket);
+
+    io_service.run();
     return 0;
 }
