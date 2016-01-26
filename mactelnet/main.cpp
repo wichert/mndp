@@ -6,6 +6,8 @@
 //  Copyright © 2016 Wichert Akkerman. All rights reserved.
 //
 
+#include <memory>
+#include <string>
 #include <iostream>
 #include <chrono>
 #include <arpa/inet.h>
@@ -61,18 +63,6 @@ namespace mactelnet {
                 interface_name = 0x0010,
             };
         }
-        
-        struct info {
-            wire::header header;
-            unsigned char address[6];
-            char identity[128];
-            char version[128];
-            char platform[128];
-            char hardware[128];
-            char softid[128];
-            char ifname[128];
-            unsigned int uptime;
-        };
     }
 }
 
@@ -100,21 +90,21 @@ uint16_t fromNetwork(const char* buffer) {
 }
 
 
-void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_address) {
+std::shared_ptr<mactelnet::mndp::Server> ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_address) {
     if (len<18) {
         BOOST_LOG_TRIVIAL(info) << "Ignoring short packet (" << len << " bytes)";
-        return;
+        return nullptr;
     }
     
+    auto server = std::make_shared<mactelnet::mndp::Server>();
     auto header = reinterpret_cast<const mactelnet::mndp::wire::header*>(buffer);
     size_t offset { sizeof(*header) };
     
-    mactelnet::mndp::Server server;
     
     if (sender_address.is_v4())
-        server.ipv4 = sender_address.to_v4();
+        server->ipv4 = sender_address.to_v4();
     else if (sender_address.is_v6())
-        server.ipv6 = sender_address.to_v6();
+        server->ipv6 = sender_address.to_v6();
     
     while (offset + 4 < len) {
         auto attr_type = static_cast<mactelnet::mndp::wire::AttributeType>(fromNetwork<uint16_t>(buffer+offset));
@@ -123,48 +113,48 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
         offset += 2;
         if (offset + attr_length > len)
             // Invalid attribute length, would overflow.
-            return;
+            return nullptr;
         switch (attr_type) {
             case mactelnet::mndp::wire::AttributeType::mac_address:
                 if (attr_length==6)
-                    memcpy(server.mac, buffer+offset, 6);
+                    memcpy(server->mac, buffer+offset, 6);
                 else {
                     BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for MAC address";
                 }
                 break;
             case mactelnet::mndp::wire::AttributeType::identity:
-                server.identity = std::string(buffer+offset, attr_length);
+                server->identity = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::version:
-                server.version = std::string(buffer+offset, attr_length);
+                server->version = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::platform:
-                server.platform = std::string(buffer+offset, attr_length);
+                server->platform = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::uptime:
                 if (attr_length==4)
-                    server.uptime = std::chrono::seconds(*reinterpret_cast<const uint32_t*>(buffer+offset));
+                    server->uptime = std::chrono::seconds(*reinterpret_cast<const uint32_t*>(buffer+offset));
                 else {
                     BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for uptime";
                 }
                 break;
             case mactelnet::mndp::wire::AttributeType::software_id:
-                server.software_id = std::string(buffer+offset, attr_length);
+                server->software_id = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::hardware:
-                server.hardware = std::string(buffer+offset, attr_length);
+                server->hardware = std::string(buffer+offset, attr_length);
                 break;
             case mactelnet::mndp::wire::AttributeType::ipv6_address:
                 if (attr_length==16) {
                     boost::asio::ip::address_v6::bytes_type bytes;
                     std::copy(buffer+offset, buffer+offset+16, bytes.begin());
-                    server.ipv6 = boost::asio::ip::address_v6(bytes);
+                    server->ipv6 = boost::asio::ip::address_v6(bytes);
                 } else {
                     BOOST_LOG_TRIVIAL(warning) << "Packet from " << sender_address << " has invalid attribute length for IPv6 address";
                 }
                 break;
             case mactelnet::mndp::wire::AttributeType::interface_name:
-                server.interface_name = std::string(buffer+offset, attr_length);
+                server->interface_name = std::string(buffer+offset, attr_length);
                 break;
             default:
                 break;
@@ -172,13 +162,18 @@ void ParseMNDP(const char* buffer, size_t len, boost::asio::ip::address sender_a
         offset += attr_length;
     }
     
+    return server;
+}
+
+
+void DisplayServer(std::shared_ptr<mactelnet::mndp::Server> server) {
     using namespace std;
     cout
-        << "Platform: " << server.platform << endl
-        << "Identity: " << server.identity << endl
-        << "Software id: " << server.software_id << endl
-        << "IPv4: " << server.ipv4 << endl
-        << "IPv6: " << server.ipv6 << endl;
+        << "Platform: " << server->platform << endl
+        << "Identity: " << server->identity << endl
+        << "Software id: " << server->software_id << endl
+        << "IPv4: " << server->ipv4 << endl
+        << "IPv6: " << server->ipv6 << endl
         ;
 }
 
@@ -211,7 +206,7 @@ int main(int argc, const char * argv[]) {
         return 0;
     }
               
-    logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::info);
+    logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::debug);
     
     boost::asio::io_service io_service;
     auto socket = CreateSocket(io_service);
@@ -224,14 +219,17 @@ int main(int argc, const char * argv[]) {
         boost::asio::steady_timer timer(io_service,
                                         std::chrono::steady_clock::now() + std::chrono::seconds(timeout));
         timer.async_wait(
-                         [&](const boost::system::error_code &) {
+                         [&](const boost::system::error_code &e) {
+                             BOOST_LOG_TRIVIAL(debug) << "Stopping";
                              socket.cancel();
                          });
     }
     
     std::function<void(const boost::system::error_code &, std::size_t)> rcv_handler;
     rcv_handler = [&](const boost::system::error_code &, std::size_t len) {
-        ParseMNDP(buf, len, sender_endpoint.address());
+        auto server = ParseMNDP(buf, len, sender_endpoint.address());
+        if (server)
+            DisplayServer(server);
         socket.async_receive_from(boost::asio::buffer(buf), sender_endpoint, rcv_handler);
     };
 
