@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>mikrotek.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>3A0824151C542EEF00802E17</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3AB155061C58172300706056</key>
 		<dict>
 			<key>primary</key>
 			<true/>

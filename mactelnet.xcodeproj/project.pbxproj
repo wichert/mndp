@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3A08241A1C542EEF00802E17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0824191C542EEF00802E17 /* main.cpp */; };
-		3A0824211C5433A000802E17 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0824201C5433A000802E17 /* libboost_system-mt.dylib */; };
+		3AB155141C58174B00706056 /* mndp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB155121C58174B00706056 /* mndp.cpp */; };
+		3AB155151C58174B00706056 /* mndp.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3AB155131C58174B00706056 /* mndp.hpp */; };
+		3AB155181C5818CD00706056 /* wire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3AB155161C5818CD00706056 /* wire.cpp */; };
+		3AB155191C5818CD00706056 /* wire.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3AB155171C5818CD00706056 /* wire.hpp */; };
+		3AB1551A1C581B1B00706056 /* libboost_log-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234931C561616009DFC8D /* libboost_log-mt.dylib */; };
+		3AB1551D1C581BEA00706056 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0824201C5433A000802E17 /* libboost_system-mt.dylib */; };
+		3AB1551E1C581CF800706056 /* libmikrotek.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB155071C58172300706056 /* libmikrotek.dylib */; };
+		3AB1551F1C581F4E00706056 /* libboost_system-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0824201C5433A000802E17 /* libboost_system-mt.dylib */; };
 		3AB234941C561616009DFC8D /* libboost_log-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234931C561616009DFC8D /* libboost_log-mt.dylib */; };
 		3AB234981C562535009DFC8D /* libboost_program_options-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */; };
 /* End PBXBuildFile section */
@@ -29,6 +36,12 @@
 		3A0824161C542EEF00802E17 /* mndp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mndp; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0824191C542EEF00802E17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3A0824201C5433A000802E17 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		3AB155071C58172300706056 /* libmikrotek.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmikrotek.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AB155121C58174B00706056 /* mndp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mndp.cpp; sourceTree = "<group>"; };
+		3AB155131C58174B00706056 /* mndp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mndp.hpp; sourceTree = "<group>"; };
+		3AB155161C5818CD00706056 /* wire.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wire.cpp; sourceTree = "<group>"; };
+		3AB155171C5818CD00706056 /* wire.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = wire.hpp; sourceTree = "<group>"; };
+		3AB1551B1C581B6200706056 /* libboost_log_setup-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_log_setup-mt.dylib"; path = "../../../../opt/local/lib/libboost_log_setup-mt.dylib"; sourceTree = "<group>"; };
 		3AB234931C561616009DFC8D /* libboost_log-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_log-mt.dylib"; path = "../../../../opt/local/lib/libboost_log-mt.dylib"; sourceTree = "<group>"; };
 		3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_program_options-mt.dylib"; path = "../../../../opt/local/lib/libboost_program_options-mt.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -38,9 +51,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AB1551F1C581F4E00706056 /* libboost_system-mt.dylib in Frameworks */,
+				3AB1551E1C581CF800706056 /* libmikrotek.dylib in Frameworks */,
 				3AB234981C562535009DFC8D /* libboost_program_options-mt.dylib in Frameworks */,
 				3AB234941C561616009DFC8D /* libboost_log-mt.dylib in Frameworks */,
-				3A0824211C5433A000802E17 /* libboost_system-mt.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB155041C58172300706056 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB1551D1C581BEA00706056 /* libboost_system-mt.dylib in Frameworks */,
+				3AB1551A1C581B1B00706056 /* libboost_log-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,10 +73,12 @@
 		3A08240D1C542EEF00802E17 = {
 			isa = PBXGroup;
 			children = (
+				3AB1551B1C581B6200706056 /* libboost_log_setup-mt.dylib */,
 				3AB234971C562535009DFC8D /* libboost_program_options-mt.dylib */,
 				3AB234931C561616009DFC8D /* libboost_log-mt.dylib */,
 				3A0824201C5433A000802E17 /* libboost_system-mt.dylib */,
 				3A0824181C542EEF00802E17 /* mndp */,
+				3AB155081C58172300706056 /* mikrotek */,
 				3A0824171C542EEF00802E17 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				3A0824161C542EEF00802E17 /* mndp */,
+				3AB155071C58172300706056 /* libmikrotek.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,7 +101,30 @@
 			path = mactelnet;
 			sourceTree = "<group>";
 		};
+		3AB155081C58172300706056 /* mikrotek */ = {
+			isa = PBXGroup;
+			children = (
+				3AB155121C58174B00706056 /* mndp.cpp */,
+				3AB155131C58174B00706056 /* mndp.hpp */,
+				3AB155161C5818CD00706056 /* wire.cpp */,
+				3AB155171C5818CD00706056 /* wire.hpp */,
+			);
+			path = mikrotek;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3AB155051C58172300706056 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB155151C58174B00706056 /* mndp.hpp in Headers */,
+				3AB155191C5818CD00706056 /* wire.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		3A0824151C542EEF00802E17 /* mactelnet */ = {
@@ -95,6 +144,23 @@
 			productReference = 3A0824161C542EEF00802E17 /* mndp */;
 			productType = "com.apple.product-type.tool";
 		};
+		3AB155061C58172300706056 /* mikrotek */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AB155111C58172300706056 /* Build configuration list for PBXNativeTarget "mikrotek" */;
+			buildPhases = (
+				3AB155031C58172300706056 /* Sources */,
+				3AB155041C58172300706056 /* Frameworks */,
+				3AB155051C58172300706056 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = mikrotek;
+			productName = mikrotek;
+			productReference = 3AB155071C58172300706056 /* libmikrotek.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -105,6 +171,9 @@
 				ORGANIZATIONNAME = "Wichert Akkerman";
 				TargetAttributes = {
 					3A0824151C542EEF00802E17 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					3AB155061C58172300706056 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -122,6 +191,7 @@
 			projectRoot = "";
 			targets = (
 				3A0824151C542EEF00802E17 /* mactelnet */,
+				3AB155061C58172300706056 /* mikrotek */,
 			);
 		};
 /* End PBXProject section */
@@ -132,6 +202,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A08241A1C542EEF00802E17 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AB155031C58172300706056 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AB155141C58174B00706056 /* mndp.cpp in Sources */,
+				3AB155181C5818CD00706056 /* wire.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +246,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					BOOST_LOG_DYN_LINK,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -174,6 +254,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -205,12 +287,15 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = BOOST_LOG_DYN_LINK;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -220,9 +305,12 @@
 		3A08241E1C542EEF00802E17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = BOOST_LOG_DYN_LINK;
-				HEADER_SEARCH_PATHS = /opt/local/include;
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = mndp;
 			};
 			name = Debug;
@@ -230,10 +318,48 @@
 		3A08241F1C542EEF00802E17 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = BOOST_LOG_DYN_LINK;
-				HEADER_SEARCH_PATHS = /opt/local/include;
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = mndp;
+			};
+			name = Release;
+		};
+		3AB1550F1C58172300706056 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3AB155101C58172300706056 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -257,6 +383,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		3AB155111C58172300706056 /* Build configuration list for PBXNativeTarget "mikrotek" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AB1550F1C58172300706056 /* Debug */,
+				3AB155101C58172300706056 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
