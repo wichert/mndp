@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3A0824151C542EEF00802E17"
-               BuildableName = "mndp"
-               BlueprintName = "mndp"
+               BlueprintIdentifier = "3A68805C1C6A76A90063F097"
+               BuildableName = "mactelnet"
+               BlueprintName = "mactelnet"
+               ReferencedContainer = "container:mactelnet.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3AB155061C58172300706056"
+               BuildableName = "libmikrotek.dylib"
+               BlueprintName = "mikrotek"
                ReferencedContainer = "container:mactelnet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +46,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3A0824151C542EEF00802E17"
-            BuildableName = "mndp"
-            BlueprintName = "mndp"
+            BlueprintIdentifier = "3A68805C1C6A76A90063F097"
+            BuildableName = "mactelnet"
+            BlueprintName = "mactelnet"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +69,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3A0824151C542EEF00802E17"
-            BuildableName = "mndp"
-            BlueprintName = "mndp"
+            BlueprintIdentifier = "3A68805C1C6A76A90063F097"
+            BuildableName = "mactelnet"
+            BlueprintName = "mactelnet"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +88,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3A0824151C542EEF00802E17"
-            BuildableName = "mndp"
-            BlueprintName = "mndp"
+            BlueprintIdentifier = "3A68805C1C6A76A90063F097"
+            BuildableName = "mactelnet"
+            BlueprintName = "mactelnet"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
