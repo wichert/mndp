@@ -29,7 +29,7 @@ namespace mndp = mikrotik::mndp;
 namespace wire = mikrotik::mndp::wire;
 
 
-void DisplayServer(std::shared_ptr<mndp::Server> server) {
+void DisplayServer(shared_ptr<mndp::Server> server) {
     cout
         << "Platform: " << server->platform << endl
         << "Identity: " << server->identity << endl
@@ -55,7 +55,7 @@ int main(int argc, const char * argv[]) {
     po::notify(vm);
     
     if (vm.count("help")) {
-        std::cout << options << std::endl;
+        cout << options << endl;
         return 0;
     }
               
@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
     if (timeout>=0) {
         BOOST_LOG_TRIVIAL(debug) << "Will stop after " << timeout << " seconds";
         boost::asio::steady_timer timer(io_service,
-                                        std::chrono::steady_clock::now() + std::chrono::seconds(timeout));
+                                        chrono::steady_clock::now() + chrono::seconds(timeout));
         timer.async_wait(
                          [&](const boost::system::error_code &e) {
                              BOOST_LOG_TRIVIAL(debug) << "Stopping";
@@ -78,8 +78,8 @@ int main(int argc, const char * argv[]) {
                          });
     }
     
-    std::function<void(const boost::system::error_code &, std::size_t)> rcv_handler;
-    rcv_handler = [&](const boost::system::error_code &, std::size_t len) {
+    function<void(const boost::system::error_code &, size_t)> rcv_handler;
+    rcv_handler = [&](const boost::system::error_code &, size_t len) {
         auto server = wire::parseMNDP(buf, len, sender_endpoint.address());
         if (server)
             DisplayServer(server);
