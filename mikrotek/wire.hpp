@@ -9,6 +9,8 @@
 #ifndef wire_hpp
 #define wire_hpp
 
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/ip/udp.hpp>
 
 namespace mikrotik {
     namespace internals {
@@ -20,6 +22,8 @@ namespace mikrotik {
         template<>
         uint16_t fromNetwork(const char* buffer);
     }
+    
+    boost::asio::ip::udp::socket CreateSocket(boost::asio::io_service &io_service, unsigned short port);
 }
 
 

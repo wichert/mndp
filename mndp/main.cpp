@@ -18,6 +18,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/program_options.hpp>
 #include "../mikrotek/mndp.hpp"
+#include "../mikrotek/wire.hpp"
 
 
 using namespace std;
@@ -26,19 +27,6 @@ namespace po = boost::program_options;
 namespace ip = boost::asio::ip;
 namespace mndp = mikrotik::mndp;
 namespace wire = mikrotik::mndp::wire;
-
-
-ip::udp::socket CreateSocket(boost::asio::io_service &io_service) {
-    ip::udp::endpoint local_endpoint(ip::udp::v4(), wire::port);
-    
-    ip::udp::socket socket(io_service);
-    socket.open(ip::udp::v4());
-    socket.set_option(boost::asio::socket_base::broadcast(true));
-    socket.set_option(boost::asio::socket_base::reuse_address(true));
-    socket.bind(local_endpoint);
-    return socket;
-}
-
 
 
 void DisplayServer(std::shared_ptr<mndp::Server> server) {
@@ -74,7 +62,7 @@ int main(int argc, const char * argv[]) {
     logging::core::get()->set_filter(logging::trivial::severity>=logging::trivial::debug);
     
     boost::asio::io_service io_service;
-    auto socket = CreateSocket(io_service);
+    auto socket = mikrotik::CreateSocket(io_service, wire::port);
     
     char buf[1500];
     ip::udp::endpoint sender_endpoint;
