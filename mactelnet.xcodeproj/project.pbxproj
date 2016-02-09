@@ -34,7 +34,7 @@
 
 /* Begin PBXFileReference section */
 		3A0824161C542EEF00802E17 /* mndp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mndp; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A0824191C542EEF00802E17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3A0824191C542EEF00802E17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../mndp/main.cpp; sourceTree = "<group>"; };
 		3A0824201C5433A000802E17 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		3AB155071C58172300706056 /* libmikrotek.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmikrotek.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AB155121C58174B00706056 /* mndp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mndp.cpp; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		3A0824151C542EEF00802E17 /* mactelnet */ = {
+		3A0824151C542EEF00802E17 /* mndp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A08241D1C542EEF00802E17 /* Build configuration list for PBXNativeTarget "mactelnet" */;
+			buildConfigurationList = 3A08241D1C542EEF00802E17 /* Build configuration list for PBXNativeTarget "mndp" */;
 			buildPhases = (
 				3A0824121C542EEF00802E17 /* Sources */,
 				3A0824131C542EEF00802E17 /* Frameworks */,
@@ -139,7 +139,7 @@
 			);
 			dependencies = (
 			);
-			name = mactelnet;
+			name = mndp;
 			productName = mactelnet;
 			productReference = 3A0824161C542EEF00802E17 /* mndp */;
 			productType = "com.apple.product-type.tool";
@@ -190,7 +190,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3A0824151C542EEF00802E17 /* mactelnet */,
+				3A0824151C542EEF00802E17 /* mndp */,
 				3AB155061C58172300706056 /* mikrotek */,
 			);
 		};
@@ -375,7 +375,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3A08241D1C542EEF00802E17 /* Build configuration list for PBXNativeTarget "mactelnet" */ = {
+		3A08241D1C542EEF00802E17 /* Build configuration list for PBXNativeTarget "mndp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A08241E1C542EEF00802E17 /* Debug */,
@@ -391,6 +391,7 @@
 				3AB155101C58172300706056 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

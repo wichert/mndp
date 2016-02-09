@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3A0824151C542EEF00802E17"
                BuildableName = "mndp"
-               BlueprintName = "mactelnet"
+               BlueprintName = "mndp"
                ReferencedContainer = "container:mactelnet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3A0824151C542EEF00802E17"
             BuildableName = "mndp"
-            BlueprintName = "mactelnet"
+            BlueprintName = "mndp"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -57,7 +57,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3A0824151C542EEF00802E17"
             BuildableName = "mndp"
-            BlueprintName = "mactelnet"
+            BlueprintName = "mndp"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -76,7 +76,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3A0824151C542EEF00802E17"
             BuildableName = "mndp"
-            BlueprintName = "mactelnet"
+            BlueprintName = "mndp"
             ReferencedContainer = "container:mactelnet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
