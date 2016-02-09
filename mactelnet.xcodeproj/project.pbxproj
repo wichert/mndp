@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A08241A1C542EEF00802E17 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0824191C542EEF00802E17 /* main.cpp */; };
+		3A51EC0A1C6A7BA500068FF8 /* telnet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A51EC081C6A7BA500068FF8 /* telnet.cpp */; };
+		3A51EC0B1C6A7BA500068FF8 /* telnet.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3A51EC091C6A7BA500068FF8 /* telnet.hpp */; };
 		3A6880601C6A76A90063F097 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A68805F1C6A76A90063F097 /* main.cpp */; };
 		3A6880641C6A77DF0063F097 /* libmikrotek.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB155071C58172300706056 /* libmikrotek.dylib */; };
 		3A6880651C6A79880063F097 /* libboost_log-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB234931C561616009DFC8D /* libboost_log-mt.dylib */; };
@@ -50,6 +52,8 @@
 		3A0824161C542EEF00802E17 /* mndp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mndp; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0824191C542EEF00802E17 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../mndp/main.cpp; sourceTree = "<group>"; };
 		3A0824201C5433A000802E17 /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../../opt/local/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		3A51EC081C6A7BA500068FF8 /* telnet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = telnet.cpp; sourceTree = "<group>"; };
+		3A51EC091C6A7BA500068FF8 /* telnet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = telnet.hpp; sourceTree = "<group>"; };
 		3A68805D1C6A76A90063F097 /* mactelnet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mactelnet; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A68805F1C6A76A90063F097 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		3AB155071C58172300706056 /* libmikrotek.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libmikrotek.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +149,8 @@
 				3AB155131C58174B00706056 /* mndp.hpp */,
 				3AB155161C5818CD00706056 /* wire.cpp */,
 				3AB155171C5818CD00706056 /* wire.hpp */,
+				3A51EC081C6A7BA500068FF8 /* telnet.cpp */,
+				3A51EC091C6A7BA500068FF8 /* telnet.hpp */,
 			);
 			path = mikrotek;
 			sourceTree = "<group>";
@@ -157,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AB155151C58174B00706056 /* mndp.hpp in Headers */,
+				3A51EC0B1C6A7BA500068FF8 /* telnet.hpp in Headers */,
 				3AB155191C5818CD00706056 /* wire.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A51EC0A1C6A7BA500068FF8 /* telnet.cpp in Sources */,
 				3AB155141C58174B00706056 /* mndp.cpp in Sources */,
 				3AB155181C5818CD00706056 /* wire.cpp in Sources */,
 			);
@@ -483,6 +491,7 @@
 				3A6880631C6A76A90063F097 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3AB155111C58172300706056 /* Build configuration list for PBXNativeTarget "mikrotek" */ = {
 			isa = XCConfigurationList;
